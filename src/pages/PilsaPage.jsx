@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import SearchNav from "../components/SearchNav";
 import Modal from '../modal/Modal';
 import IMG from "../assets/book.jpg";
+import ArrowDropDown from "../assets/arrow_drop_down.svg"
 
 // HeartButton 컴포넌트: 하트 버튼과 좋아요 수 표시
 const HeartButton = ({isLiked, likeCount, onHeartClick}) => {
@@ -25,16 +26,14 @@ const sampleTexts = [
     "이 텍스트는 세 번째 샘플 텍스트입니다.",
 ];
 
-const bookInfo = [
-    {
-        category: "소설",
-        title: "피프티 피플",
-        author: "정세랑",
-        img: IMG
-    },
-];
-
 const PilsaPage = () => {
+    const bookInfo = {
+            genre: "소설",
+            title: "피프티 피플",
+            author: "정세랑",
+            img: IMG
+        }
+
     const navigate = useNavigate();
 
     const [isLiked, setIsLiked] = useState(false);
@@ -193,8 +192,21 @@ const PilsaPage = () => {
     return (
         <div className="mb-6">
             <SearchNav/>
-            <div className="flex flex-col items-center p-5 box-border w-full max-w-screen-lg mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-center relative mb-8 w-full">
+            <div className="flex flex-col items-center box-border w-full">
+                <div className="mt-[48px] w-[1216px] flex justify-end">
+                    <div className="h-8 justify-start items-start inline-flex">
+                        <div
+                            className="pl-4 pr-2 py-1.5 rounded-lg border border-[#0f0f0f] justify-start items-center gap-2 flex">
+                            <p className="text-center text-[#0f0f0f] text-sm font-medium leading-tight tracking-tight">
+                                일반 모드
+                            </p>
+                            <img src={ArrowDropDown}
+                                 alt="모드 설정 버튼"
+                                 className="w-[18px] h-[18px] relative"/>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-row justify-between items-center relative mb-8">
                     {currentTextIndex > 0 && (
                         <div
                             className="absolute left-0 md:left-[-80px] top-1/2 transform -translate-y-1/2 flex items-center justify-center w-[40px] h-[40px] md:w-[60px] md:h-[60px] text-white bg-gray-800 rounded-full cursor-pointer opacity-70 transition-opacity duration-300 hover:opacity-100 z-10 ml-2"
@@ -208,16 +220,16 @@ const PilsaPage = () => {
                         </div>
                     )}
                     <div
-                        className="flex flex-1 p-4 bg-white shadow-md rounded-lg box-border mb-4 md:mb-0 h-[200px] md:h-[420px] md:w-[50%] lg:w-[40%]">
-                        {/* md 사이즈부터 너비가 줄어듦 */}
+                        className="w-[568px] h-[420px] flex flex-1 m-4 mb-4">
                         <div
                             id="sampleText"
                             className="flex-1 text-gray-500 whitespace-pre-wrap break-words overflow-auto"
                         ></div>
                     </div>
+                    <div className='w-px h-[416px] bg-[#e0e0e0]'>
+                    </div>
                     <div
-                        className="flex flex-1 p-4 bg-white shadow-md rounded-lg box-border h-[200px] md:h-[420px] md:w-[50%] lg:w-[40%]">
-                        {/* md 사이즈부터 너비가 줄어듦 */}
+                        className="w-[568px] h-[420px] flex flex-1 m-4 h-[200px]">
                         <textarea
                             id="userInput"
                             className="w-full h-full resize-none border-none outline-none text-lg text-gray-800 whitespace-pre-wrap break-words"
@@ -241,40 +253,52 @@ const PilsaPage = () => {
                         </div>
                     )}
                 </div>
-                <div className="w-full bg-gray-300 rounded-full overflow-hidden mb-4">
+                <div className="w-[1216px] bg-gray-300 rounded-full overflow-hidden mb-4">
                     <div
                         id="progressBar"
                         className="h-2 bg-red-500 transition-width duration-500"
                     ></div>
                 </div>
-                <div className="flex justify-end mb-5 w-full">
+                <div className="w-[1216px] flex justify-end mb-5">
                     <button
                         id="saveButton"
-                        className="px-5 py-2 md:px-7 md:py-3 bg-gray-400 text-white rounded-md transition-colors duration-300 hover:bg-red-400"
-                        onClick={saveNotify}
-                    >
+                        className="px-5 py-2 md:px-7 md:py-3 bg-gray-400 text-white rounded-md transition-colors duration-300 hover:bg-[#869F58]"
+                        onClick={saveNotify}>
                         저장하기
                     </button>
                 </div>
             </div>
-            <div className="flex items-center mx-10">
-                {/* JSON 파일에서 불러온 이미지 사용 */}
-                <img
-                    src={bookInfo.image}
-                    alt={bookInfo.title}
-                    className="w-[100px] h-[150px] mr-5"
-                />
-                <div className="flex-1 font-normal">
-                    {/* JSON 파일에서 불러온 책 정보 사용 */}
-                    <h2 className="mb-2 font-semibold">{bookInfo.title}</h2>
-                    <p>저자: {bookInfo.author}</p>
-                    <p>장르: {bookInfo.genre}</p>
-                    <p>길이: 3장</p>
-                    <HeartButton
-                        isLiked={isLiked}
-                        likeCount={likeCount}
-                        onHeartClick={handleHeartClick}
-                    />
+            <div className="flex justify-center items-center mt-[64.23px]">
+                <div className="">
+                    <textarea className="w-[1032px] h-[360px] px-9 py-10 rounded-[10px] border border-[#8a8a8a] justify-center items-center inline-flex text-[#0f0f0f] text-base font-normal"
+                              placeholder="필사하면서 생각난 것들을 자유롭게 메모해 보세요.">
+                    </textarea>
+                </div>
+            </div>
+            <div className="flex justify-center items-center mt-[108px]">
+                <div className="w-[1032px] h-[309px] flex flex-col">
+                    <div className="text-black text-[32px] font-bold">
+                        책 정보
+                    </div>
+                    <div className="flex flex-row mt-[32px]">
+                        <img
+                            src={bookInfo.img}
+                            alt={bookInfo.title}
+                            className="w-[156px] h-[231px] mr-[32px]"/>
+                        <div className="flex flex-col">
+                            <p className="text-[#0f0f0f] text-xl font-normal">“이러이러한 상황에서 위로가 되는 책 그런데 무엇무엇을 곁들인. ”</p>
+                            <p className="mt-[6px] text-[#b0b0b0] text-base font-normal">에디터 레몬</p>
+                            <div className="mt-[62px]">
+                                <p className="mb-1 text-black text-xl font-semibold">{bookInfo.title}</p>
+                                <p className="text-[#8a8a8a] text-base font-normal">{bookInfo.author} · {bookInfo.genre}</p>
+                                <p className="text-[#8a8a8a] text-base font-normal">창비</p>
+                                <HeartButton
+                                    isLiked={isLiked}
+                                    likeCount={likeCount}
+                                    onHeartClick={handleHeartClick}/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <Modal
